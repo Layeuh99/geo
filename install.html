@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Installer Web GIS Kaffrine - Instructions PWA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        .platform-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 2px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .platform-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        .platform-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: block;
+            text-align: center;
+        }
+        .platform-card h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        .steps {
+            list-style: none;
+        }
+        .steps li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            line-height: 1.5;
+        }
+        .steps li:last-child {
+            border-bottom: none;
+        }
+        .step-number {
+            background: white;
+            color: #667eea;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+            font-size: 0.9rem;
+        }
+        .btn-primary {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 30px auto;
+            padding: 18px 30px;
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+        }
+        .icons-section {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 40px;
+            text-align: center;
+        }
+        .icons-section h2 {
+            margin-bottom: 20px;
+        }
+        .icons-section p {
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .btn-secondary {
+            display: inline-block;
+            padding: 15px 30px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover {
+            background: white;
+            color: #667eea;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .feature {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .feature i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .feature h3 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        .feature p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            .platform-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📱 Installer Web GIS Kaffrine</h1>
+        <p class="subtitle">Application de cartographie interactive - Installation rapide sur tous vos appareils</p>
+
+        <div class="platform-grid">
+            <!-- Android -->
+            <div class="platform-card">
+                <span class="platform-icon">🤖</span>
+                <h2>Android (Chrome)</h2>
+                <ol class="steps">
+                    <li>
+                        <span class="step-number">1</span>
+                        <span>Ouvrez <strong>Chrome</strong> et allez sur <code>localhost:8090</code></span>
+                    </li>
+                    <li>
+                        <span class="step-number">2</span>
+                        <span>Cliquez sur les <strong>3 points</strong> ⋮ en haut à droite</span>
+                    </li>
+                    <li>
+                        <span class="step-number">3</span>
+                        <span>Sélectionnez <strong>"Ajouter à l'écran d'accueil"</strong></span>
+                    </li>
+                    <li>
+                        <span class="step-number">4</span>
+                        <span>Cliquez sur <strong>"Ajouter"</strong></span>
+                    </li>
+                    <li>
+                        <span class="step-number">5</span>
+                        <span>L'icône apparaît sur votre écran d'accueil !</span>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- iOS -->
+            <div class="platform-card">
+                <span class="platform-icon">🍎</span>
+                <h2>iOS (Safari)</h2>
+                <ol class="steps">
+                    <li>
+                        <span class="step-number">1</span>
+                        <span>Ouvrez <strong>Safari</strong> et allez sur <code>localhost:8090</code></span>
+                    </li>
+                    <li>
+                        <span class="step-number">2</span>
+                        <span>Cliquez sur le bouton <strong>Partager</strong> ⎘ en bas</span>
+                    </li>
+                    <li>
+                        <span class="step-number">3</span>
+                        <span>Faites défiler et touchez <strong>"Sur l'écran d'accueil"</strong></span>
+                    </li>
+                    <li>
+                        <span class="step-number">4</span>
+                        <span>Cliquez sur <strong>"Ajouter"</strong> en haut à droite</span>
+                    </li>
+                    <li>
+                        <span class="step-number">5</span>
+                        <span>L'application est installée !</span>
+                    </li>
+                </ol>
+            </div>
+
+            <!-- PC -->
+            <div class="platform-card">
+                <span class="platform-icon">💻</span>
+                <h2>PC (Chrome/Edge)</h2>
+                <ol class="steps">
+                    <li>
+                        <span class="step-number">1</span>
+                        <span>Ouvrez <strong>Chrome</strong> ou <strong>Edge</strong></span>
+                    </li>
+                    <li>
+                        <span class="step-number">2</span>
+                        <span>Allez sur <code>localhost:8090</code></span>
+                    </li>
+                    <li>
+                        <span class="step-number">3</span>
+                        <span>Cliquez sur l'icône <strong>➕</strong> dans la barre d'adresse</span>
+                    </li>
+                    <li>
+                        <span class="step-number">4</span>
+                        <span>Ou cliquez sur ⋮ → <strong>"Installer Web GIS Kaffrine"</strong></span>
+                    </li>
+                    <li>
+                        <span class="step-number">5</span>
+                        <span>L'application s'ouvre comme un logiciel natif !</span>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <a href="/" class="btn-primary">🚀 Ouvrir l'application maintenant</a>
+
+        <div class="icons-section">
+            <h2>🎨 Générer les icônes de l'application</h2>
+            <p>Pour que l'application s'affiche avec une belle icône sur votre téléphone, vous devez générer les icônes PNG. Cliquez sur le bouton ci-dessous pour créer toutes les tailles nécessaires.</p>
+            <a href="icons/generate.html" class="btn-secondary">📦 Générer les icônes PNG</a>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <i>📡</i>
+                <h3>Géolocalisation</h3>
+                <p>Localisez-vous en temps réel sur la carte</p>
+            </div>
+            <div class="feature">
+                <i>🔍</i>
+                <h3>Requêtes</h3>
+                <p>Recherchez par nom, code ou proximité</p>
+            </div>
+            <div class="feature">
+                <i>📶</i>
+                <h3>Mode Hors Ligne</h3>
+                <p>Fonctionne sans connexion internet</p>
+            </div>
+            <div class="feature">
+                <i>🌙</i>
+                <h3>Thème Sombre</h3>
+                <p>Mode nuit pour plus de confort</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

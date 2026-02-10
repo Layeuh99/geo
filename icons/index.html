@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur d'Icônes - Web GIS Kaffrine</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .icon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .icon-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        .icon-card canvas {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .icon-card p {
+            margin: 10px 0 0 0;
+            font-size: 0.9rem;
+        }
+        .btn-download {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: block;
+            margin: 30px auto;
+            transition: transform 0.3s;
+        }
+        .btn-download:hover {
+            transform: scale(1.05);
+        }
+        .instructions {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+        }
+        .instructions h2 {
+            margin-top: 0;
+        }
+        .instructions ol {
+            line-height: 1.8;
+        }
+        .instructions code {
+            background: rgba(0,0,0,0.3);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Générateur d'Icônes PWA - Web GIS Kaffrine</h1>
+    
+    <div class="icon-grid" id="iconGrid"></div>
+    
+    <button class="btn-download" onclick="downloadAllIcons()">
+        📦 Télécharger toutes les icônes
+    </button>
+    
+    <div class="instructions">
+        <h2>Instructions d'installation PWA</h2>
+        <ol>
+            <li><strong>Sur Android (Chrome) :</strong>
+                <ul>
+                    <li>Ouvrez l'application dans Chrome</li>
+                    <li>Cliquez sur les 3 points ⋮</li>
+                    <li>Sélectionnez "Ajouter à l'écran d'accueil"</li>
+                    <li>L'icône apparaîtra sur votre téléphone</li>
+                </ul>
+            </li>
+            <li><strong>Sur iOS (Safari) :</strong>
+                <ul>
+                    <li>Ouvrez l'application dans Safari</li>
+                    <li>Cliquez sur le bouton Partager ⎘</li>
+                    <li>Sélectionnez "Sur l'écran d'accueil"</li>
+                    <li>Cliquez sur "Ajouter"</li>
+                </ul>
+            </li>
+            <li><strong>Sur PC (Chrome/Edge) :</strong>
+                <ul>
+                    <li>Cliquez sur l'icône ➕ dans la barre d'adresse</li>
+                    <li>Ou cliquez sur ⋮ → Installer Web GIS Kaffrine</li>
+                </ul>
+            </li>
+        </ol>
+        <p><strong>Note :</strong> Une fois installée, l'application fonctionne <strong>hors ligne</strong> et se comporte comme une vraie application mobile avec accès à la géolocalisation !</p>
+    </div>
+
+    <script>
+        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        const iconGrid = document.getElementById('iconGrid');
+        const generatedIcons = [];
+
+        function generateIcon(size) {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            
+            // Fond avec dégradé
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            
+            // Rectangle arrondi
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.roundRect(0, 0, size, size, size * 0.2);
+            ctx.fill();
+            
+            // Cercle globe
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = size * 0.04;
+            ctx.globalAlpha = 0.9;
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size * 0.31, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Lignes de grille
+            ctx.lineWidth = size * 0.016;
+            ctx.globalAlpha = 0.6;
+            
+            // Ligne verticale
+            ctx.beginPath();
+            ctx.moveTo(size/2, size * 0.19);
+            ctx.lineTo(size/2, size * 0.81);
+            ctx.stroke();
+            
+            // Ligne horizontale
+            ctx.beginPath();
+            ctx.moveTo(size * 0.19, size/2);
+            ctx.lineTo(size * 0.81, size/2);
+            ctx.stroke();
+            
+            // Ellipse
+            ctx.beginPath();
+            ctx.ellipse(size/2, size/2, size * 0.31, size * 0.16, 0, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Goupille de localisation
+            ctx.globalAlpha = 0.95;
+            ctx.fillStyle = 'white';
+            
+            const pinX = size/2;
+            const pinY = size * 0.42;
+            const pinSize = size * 0.22;
+            
+            // Corps de la goupille
+            ctx.beginPath();
+            ctx.moveTo(pinX, pinY - pinSize);
+            ctx.bezierCurveTo(
+                pinX + pinSize * 0.5, pinY - pinSize,
+                pinX + pinSize * 0.6, pinY - pinSize * 0.3,
+                pinX, pinY + pinSize * 0.8
+            );
+            ctx.bezierCurveTo(
+                pinX - pinSize * 0.6, pinY - pinSize * 0.3,
+                pinX - pinSize * 0.5, pinY - pinSize,
+                pinX, pinY - pinSize
+            );
+            ctx.fill();
+            
+            // Cercle intérieur
+            ctx.fillStyle = '#667eea';
+            ctx.beginPath();
+            ctx.arc(pinX, pinY - pinSize * 0.3, pinSize * 0.35, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Point central
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(pinX, pinY - pinSize * 0.3, pinSize * 0.15, 0, Math.PI * 2);
+            ctx.fill();
+            
+            return canvas;
+        }
+
+        // Générer et afficher toutes les icônes
+        sizes.forEach(size => {
+            const canvas = generateIcon(size);
+            
+            const card = document.createElement('div');
+            card.className = 'icon-card';
+            card.innerHTML = `
+                <canvas id="canvas-${size}" width="${size}" height="${size}"></canvas>
+                <p>${size}x${size}px</p>
+            `;
+            iconGrid.appendChild(card);
+            
+            // Copier le contenu du canvas
+            const displayCanvas = document.getElementById(`canvas-${size}`);
+            const displayCtx = displayCanvas.getContext('2d');
+            displayCtx.drawImage(canvas, 0, 0);
+            
+            generatedIcons.push({ size, canvas });
+        });
+
+        function downloadAllIcons() {
+            generatedIcons.forEach(({ size, canvas }) => {
+                const link = document.createElement('a');
+                link.download = `icon-${size}x${size}.png`;
+                link.href = canvas.toDataURL('image/png');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+            
+            alert('✅ Toutes les icônes ont été téléchargées !\n\nPlacez-les dans le dossier /icons de votre application.');
+        }
+    </script>
+</body>
+</html>

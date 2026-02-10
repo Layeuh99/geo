@@ -1,0 +1,76 @@
+/* ============================================
+   THEME SOMBRE (Dark Mode)
+   ============================================ */
+body.dark-theme {
+    background-color: #1a1a2e;
+}
+
+body.dark-theme .navbar {
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+}
+
+body.dark-theme .sidebar-left,
+body.dark-theme .sidebar-right {
+    background: #16213e;
+    border-color: #0f3460;
+}
+
+body.dark-theme .panel-header {
+    background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+}
+
+body.dark-theme .panel-content {
+    color: #eaeaea;
+}
+
+body.dark-theme .layer-section h4,
+body.dark-theme .basemaps-section h4,
+body.dark-theme .legend-section h4 {
+    color: #eaeaea;
+    border-bottom-color: #0f3460;
+}
+
+body.dark-theme .layer-item label,
+body.dark-theme .basemap-option span,
+body.dark-theme .legend-item span {
+    color: #b8b8b8;
+}
+
+body.dark-theme .basemap-option {
+    background: #0f3460;
+    border-color: #1a1a2e;
+}
+
+body.dark-theme .status-bar {
+    background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+    color: #b8b8b8;
+}
+
+body.dark-theme .modal-content {
+    background: #16213e;
+    color: #eaeaea;
+}
+
+body.dark-theme .simple-option-btn {
+    background: linear-gradient(135deg, #16213e 0%, #0f3460 100%);
+    border-color: #0f3460;
+}
+
+body.dark-theme .simple-option-btn span {
+    color: #eaeaea;
+}
+
+body.dark-theme .waiting-message {
+    background: #0f3460;
+}
+
+body.dark-theme .attr-input-section input {
+    background: #0f3460;
+    border-color: #0f3460;
+    color: #eaeaea;
+}
+
+body.dark-theme .type-btn {
+    background: #0f3460;
+    color: #eaeaea;
+}

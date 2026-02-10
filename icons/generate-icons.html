@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate PWA Icons</title>
+</head>
+<body>
+    <canvas id="canvas" width="512" height="512"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        
+        function drawIcon(size) {
+            canvas.width = size;
+            canvas.height = size;
+            
+            // Background gradient
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+            
+            // Rounded rect background
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.roundRect(0, 0, size, size, size * 0.2);
+            ctx.fill();
+            
+            // Globe circle
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = size * 0.04;
+            ctx.globalAlpha = 0.9;
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size * 0.31, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Grid lines
+            ctx.lineWidth = size * 0.016;
+            ctx.globalAlpha = 0.6;
+            
+            // Horizontal line
+            ctx.beginPath();
+            ctx.moveTo(size/2, size * 0.19);
+            ctx.lineTo(size/2, size * 0.81);
+            ctx.stroke();
+            
+            // Vertical line
+            ctx.beginPath();
+            ctx.moveTo(size * 0.19, size/2);
+            ctx.lineTo(size * 0.81, size/2);
+            ctx.stroke();
+            
+            // Ellipse
+            ctx.beginPath();
+            ctx.ellipse(size/2, size/2, size * 0.31, size * 0.16, 0, 0, Math.PI * 2);
+            ctx.stroke();
+            
+            // Location pin
+            ctx.globalAlpha = 0.95;
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            const pinX = size/2;
+            const pinY = size * 0.45;
+            const pinRadius = size * 0.20;
+            
+            ctx.arc(pinX, pinY - pinRadius * 0.3, pinRadius * 0.6, Math.PI, 0);
+            ctx.lineTo(pinX + pinRadius * 0.6, pinY + pinRadius * 0.5);
+            ctx.lineTo(pinX, pinY + pinRadius * 1.2);
+            ctx.lineTo(pinX - pinRadius * 0.6, pinY + pinRadius * 0.5);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Inner circle
+            ctx.fillStyle = '#667eea';
+            ctx.beginPath();
+            ctx.arc(pinX, pinY - pinRadius * 0.3, pinRadius * 0.35, 0, Math.PI * 2);
+            ctx.fill();
+            
+            // Center dot
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(pinX, pinY - pinRadius * 0.3, pinRadius * 0.15, 0, Math.PI * 2);
+            ctx.fill();
+            
+            return canvas.toDataURL('image/png');
+        }
+        
+        // Generate icons
+        sizes.forEach(size => {
+            const dataUrl = drawIcon(size);
+            const link = document.createElement('a');
+            link.download = `icon-${size}x${size}.png`;
+            link.href = dataUrl;
+            link.click();
+        });
+    </script>
+</body>
+</html>

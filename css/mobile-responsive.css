@@ -1,0 +1,168 @@
+/* ============================================
+   RESPONSIVE MOBILE - PANNEAUX & INSTALLATION
+   ============================================ */
+
+/* Bouton d'installation dans la navbar */
+.install-toggle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: 10px;
+}
+
+.install-toggle:hover {
+    background: rgba(255,255,255,0.3);
+    transform: scale(1.1);
+}
+
+.install-toggle i {
+    color: white;
+    font-size: 1.2rem;
+}
+
+/* Boutons mobiles pour les panneaux (en bas) */
+.mobile-panel-buttons {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    gap: 15px;
+    background: rgba(255,255,255,0.9);
+    padding: 10px 20px;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.mobile-panel-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.mobile-panel-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.mobile-panel-btn:active {
+    transform: scale(0.95);
+}
+
+/* Overlay pour fermer les panneaux sur mobile */
+.panel-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 150;
+}
+
+.panel-overlay.active {
+    display: block;
+}
+
+/* Media Queries pour Mobile */
+@media (max-width: 768px) {
+    /* Afficher les boutons mobiles */
+    .mobile-panel-buttons {
+        display: flex;
+    }
+    
+    /* Ajustements pour les panneaux */
+    .sidebar-left,
+    .sidebar-right {
+        position: fixed;
+        top: 0;
+        height: 100%;
+        width: 85%;
+        max-width: 320px;
+        z-index: 200;
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar-left {
+        left: 0;
+        transform: translateX(-100%);
+    }
+
+    .sidebar-right {
+        right: 0;
+        transform: translateX(100%);
+    }
+
+    .sidebar-left.active,
+    .sidebar-right.active {
+        transform: translateX(0);
+    }
+    
+    /* Ajustements navbar */
+    .navbar-brand .brand-text {
+        font-size: 1rem;
+    }
+    
+    /* Status bar plus compacte */
+    .status-bar {
+        font-size: 0.7rem;
+        padding: 5px 10px;
+    }
+    
+    /* Floating controls repositionnés */
+    .floating-controls {
+        bottom: 90px;
+        right: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar-brand .brand-text {
+        display: none;
+    }
+    
+    .mobile-panel-buttons {
+        gap: 10px;
+        padding: 8px 15px;
+    }
+    
+    .mobile-panel-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+/* Animation pour les notifications */
+@keyframes slideUpFade {
+    from {
+        transform: translate(-50%, 100px);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
+    }
+}
+
+.mobile-panel-buttons {
+    animation: slideUpFade 0.3s ease;
+}

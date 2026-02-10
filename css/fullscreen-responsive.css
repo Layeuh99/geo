@@ -1,0 +1,416 @@
+/* ============================================
+   CSS PLEIN ECRAN ET RESPONSIVE COMPLET
+   ============================================ */
+
+/* Reset complet */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ============================================
+   APP CONTAINER - PLEIN ECRAN
+   ============================================ */
+.app-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ============================================
+   PANNEAUX LATERAUX
+   ============================================ */
+.sidebar-left,
+.sidebar-right {
+    width: 320px;
+    min-width: 320px;
+    height: 100%;
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.sidebar-left {
+    border-right: 1px solid #dee2e6;
+}
+
+.sidebar-right {
+    border-left: 1px solid #dee2e6;
+}
+
+/* Header des panneaux */
+.panel-header {
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.panel-header h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.panel-toggle {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.panel-toggle:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+/* Contenu des panneaux */
+.panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 15px;
+}
+
+.panel-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.panel-content::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+}
+
+/* ============================================
+   ZONE CARTE - PLEIN ECRAN
+   ============================================ */
+.map-container {
+    flex: 1;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+
+#map {
+    width: 100%;
+    height: 100% !important;
+}
+
+/* ============================================
+   BARRE DE STATUT
+   ============================================ */
+.status-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(30, 60, 114, 0.95);
+    color: white;
+    padding: 8px 15px;
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 50;
+}
+
+/* ============================================
+   BOUTONS FLOTTANTS
+   ============================================ */
+.floating-controls {
+    position: absolute;
+    bottom: 50px;
+    right: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+}
+
+.float-btn {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.float-btn:hover {
+    transform: scale(1.1);
+}
+
+/* ============================================
+   BOUTONS MOBILE EN BAS
+   ============================================ */
+.mobile-panel-buttons {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    gap: 15px;
+    background: rgba(255,255,255,0.95);
+    padding: 12px 20px;
+    border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+}
+
+.mobile-panel-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.mobile-panel-btn:hover {
+    transform: scale(1.1);
+}
+
+/* ============================================
+   RESPONSIVE - MOBILE ET TABLETTE
+   ============================================ */
+
+/* Tablette */
+@media (max-width: 1024px) {
+    .sidebar-left,
+    .sidebar-right {
+        width: 280px;
+        min-width: 280px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .app-container {
+        position: relative;
+    }
+    
+    .sidebar-left,
+    .sidebar-right {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        max-width: 100%;
+        height: 100vh;
+        z-index: 10000;
+        background: white;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .sidebar-right {
+        left: auto;
+        right: 0;
+        transform: translateX(100%);
+    }
+    
+    .sidebar-left.active,
+    .sidebar-right.active {
+        transform: translateX(0);
+    }
+    
+    /* Afficher les boutons de fermeture sur mobile */
+    .panel-close-mobile {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Masquer les boutons toggle sur mobile */
+    .panel-toggle {
+        display: none !important;
+    }
+    
+    /* Header des panneaux en mobile */
+    .sidebar-left .panel-header,
+    .sidebar-right .panel-header {
+        padding: 20px;
+        flex-shrink: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .sidebar-left .panel-header h3,
+    .sidebar-right .panel-header h3 {
+        font-size: 1.3rem;
+        color: white;
+        margin: 0;
+    }
+    
+    /* Contenu scrollable */
+    .sidebar-left .panel-content,
+    .sidebar-right .panel-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    /* Fermer avec le bouton X */
+    .panel-toggle {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    
+    /* Afficher les boutons mobiles */
+    .mobile-panel-buttons {
+        display: flex;
+    }
+    
+    /* Boutons flottants plus haut */
+    .floating-controls {
+        bottom: 90px;
+    }
+    
+    /* Navbar plus compacte */
+    .navbar {
+        padding: 8px 15px;
+    }
+    
+    .navbar-menu {
+        display: none;
+    }
+    
+    .navbar-toggle {
+        display: flex !important;
+    }
+    
+    /* Status bar plus petite */
+    .status-bar {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+}
+
+/* Très petit mobile */
+@media (max-width: 480px) {
+    .mobile-panel-buttons {
+        gap: 10px;
+        padding: 10px 15px;
+    }
+    
+    .mobile-panel-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1rem;
+    }
+    
+    .floating-controls {
+        bottom: 80px;
+        right: 10px;
+    }
+    
+    .float-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+/* ============================================
+   MODALS - PLEIN ECRAN SUR MOBILE
+   ============================================ */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 15px;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+@media (max-width: 768px) {
+    .modal {
+        padding: 0;
+    }
+    
+    .modal-content {
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 0;
+        height: 100%;
+    }
+}
+
+/* ============================================
+   OVERLAY POUR FERMER LES PANNEAUX
+   ============================================ */
+.panel-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 150;
+}
+
+.panel-overlay.active {
+    display: block;
+}

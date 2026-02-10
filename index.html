@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="theme-color" content="#667eea">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <link rel="manifest" href="manifest.json">
+        <link rel="apple-touch-icon" href="icons/icon-192x192.png">
+        <title>GéoWeb Kaffrine</title>
+        
+        <!-- Styles externes -->
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/L.Control.Layers.Tree.css">
+        <link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/MarkerCluster.css">
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/app-modern.css?v=16">
+        <link rel="stylesheet" href="css/dark-theme.css">
+        <link rel="stylesheet" href="css/mobile-responsive.css">
+        <link rel="stylesheet" href="css/fullscreen-responsive.css">
+    </head>
+    <body>
+        <!-- Skip to content pour accessibilité -->
+        <a href="#main-content" class="skip-link">Aller au contenu principal</a>
+        
+        <!-- Barre de navigation sémantique -->
+        <header role="banner">
+        <nav class="navbar" role="navigation" aria-label="Navigation principale">
+            <div class="navbar-brand" onclick="location.reload()" style="cursor: pointer;" title="Cliquez pour recharger la page" role="button" tabindex="0" aria-label="Recharger GéoWeb Kaffrine">
+                <div class="logo-container">
+                    <svg class="app-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <circle cx="50" cy="50" r="45" fill="#667eea"/>
+                        <circle cx="50" cy="50" r="35" fill="#764ba2"/>
+                        <path d="M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z" fill="white"/>
+                        <circle cx="50" cy="50" r="8" fill="#333"/>
+                    </svg>
+                </div>
+                <h1 class="brand-text">GéoWeb Kaffrine</h1>
+            </div>
+            <ul class="navbar-menu" role="menubar" aria-label="Menu principal">
+                <li><a href="#" onclick="showHome()" role="menuitem" aria-label="Accueil"><i class="fas fa-home" aria-hidden="true"></i> <span>Accueil</span></a></li>
+                <li><a href="#" onclick="toggleLeftPanel()" role="menuitem" aria-label="Panneau des couches"><i class="fas fa-th" aria-hidden="true"></i> <span>Couches</span></a></li>
+                <li><a href="#" onclick="toggleRightPanel()" role="menuitem" aria-label="Fonds de carte et légende"><i class="fas fa-palette" aria-hidden="true"></i> <span>Fonds & Légende</span></a></li>
+                <li><a href="#" onclick="showAbout()" role="menuitem" aria-label="À propos de l'application"><i class="fas fa-info-circle" aria-hidden="true"></i> <span>À propos</span></a></li>
+                <li><a href="#" onclick="showSpatialQuery()" role="menuitem" aria-label="Requête spatiale"><i class="fas fa-draw-polygon" aria-hidden="true"></i> <span>Requête spatiale</span></a></li>
+                <li><a href="#" onclick="showAttributeQuery()" role="menuitem" aria-label="Requête attributaire"><i class="fas fa-database" aria-hidden="true"></i> <span>Requête attributaire</span></a></li>
+                <li><a href="#" onclick="showAttributeQuery()"><i class="fas fa-database"></i> Requete attributaire</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle"><i class="fas fa-download"></i> Telechargement <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" onclick="downloadData('geojson')"><i class="fas fa-file-code"></i> GeoJSON</a></li>
+                        <li><a href="#" onclick="downloadData('shapefile')"><i class="fas fa-file-archive"></i> Shapefile</a></li>
+                        <li><a href="#" onclick="downloadData('kml')"><i class="fas fa-file-alt"></i> KML</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" onclick="toggleMeasure()"><i class="fas fa-ruler-combined"></i> Outils de mesure</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle"><i class="fas fa-search-plus"></i> Zoom <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" onclick="map.zoomIn()"><i class="fas fa-plus"></i> Zoom Avant</a></li>
+                        <li><a href="#" onclick="map.zoomOut()"><i class="fas fa-minus"></i> Zoom Arriere</a></li>
+                        <li><a href="#" onclick="resetZoom()"><i class="fas fa-expand"></i> Vue complete</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="navbar-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="theme-toggle" onclick="toggleTheme()" title="Changer de thème">
+                <i class="fas fa-moon" id="themeIcon"></i>
+            </div>
+            <div class="install-toggle" onclick="showInstallModal()" title="Installer l'application">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+        </nav>
+
+        <!-- Modal de Bienvenue -->
+        <div id="welcomeModal" class="modal welcome-modal">
+            <div class="modal-content welcome-content">
+                <div class="welcome-header">
+                    <svg class="welcome-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" fill="#667eea"/>
+                        <circle cx="50" cy="50" r="35" fill="#764ba2"/>
+                        <path d="M50 20 L55 45 L80 50 L55 55 L50 80 L45 55 L20 50 L45 45 Z" fill="white"/>
+                        <circle cx="50" cy="50" r="8" fill="#333"/>
+                    </svg>
+                    <h2>Bienvenue sur GéoWeb Kaffrine</h2>
+                    <p class="welcome-subtitle">Votre plateforme de cartographie interactive</p>
+                </div>
+                <div class="welcome-body">
+                    <p>Explorez les données géographiques de la région de Kaffrine avec une interface moderne et intuitive.</p>
+                    <div class="welcome-features">
+                        <div class="feature-item">
+                            <i class="fas fa-layer-group"></i>
+                            <span>Visualisez les couches thématiques</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-search"></i>
+                            <span>Effectuez des requêtes spatiales et attributaires</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-download"></i>
+                            <span>Téléchargez les données en GeoJSON, KML, Shapefile</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-ruler-combined"></i>
+                            <span>Mesurez les distances et surfaces</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="welcome-footer">
+                    <button class="btn btn-primary" onclick="closeWelcomeModal()">
+                        <i class="fas fa-map-marked-alt"></i> Explorer la carte
+                    </button>
+                    <label class="dont-show-again">
+                        <input type="checkbox" id="dontShowWelcome"> Ne plus afficher
+                    </label>
+                </div>
+                <button class="modal-close" onclick="closeWelcomeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Container principal -->
+        <div class="app-container">
+            <!-- Panneau de gauche - Controle des couches -->
+            <div class="sidebar-left collapsed" id="sidebarLeft">
+                <div class="panel-header">
+                    <h3><i class="fas fa-th"></i> Couches</h3>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="panel-toggle" onclick="toggleLeftPanel()">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                        <button class="panel-close-mobile" onclick="closeLeftPanel()" style="display: none; background: rgba(255,255,255,0.2); border: none; color: white; width: 30px; height: 30px; border-radius: 4px; cursor: pointer; font-size: 1.2rem;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="panel-content" id="layerControlContainer">
+                    <!-- Le controle des couches sera injecte ici -->
+                </div>
+            </div>
+
+            <!-- Zone de la carte -->
+            <div class="map-container">
+                <div id="map" style="width: 100%; height: 100%; min-height: 400px;"></div>
+                
+                <!-- Barre de statut en bas -->
+                <div class="status-bar">
+                    <div class="status-left">
+                        <span id="coordinates"><i class="fas fa-map-marker-alt"></i> Coordonnees: --</span>
+                    </div>
+                    <div class="status-center">
+                        <span id="scale"><i class="fas fa-ruler"></i> Echelle: --</span>
+                    </div>
+                    <div class="status-right">
+                        <span id="zoom-level"><i class="fas fa-search"></i> Zoom: --</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panneau de droite - Legende et fonds de carte -->
+            <div class="sidebar-right collapsed" id="sidebarRight">
+                <div class="panel-header">
+                    <div style="display: flex; gap: 10px;">
+                        <button class="panel-close-mobile" onclick="closeRightPanel()" style="display: none; background: rgba(255,255,255,0.2); border: none; color: white; width: 30px; height: 30px; border-radius: 4px; cursor: pointer; font-size: 1.2rem;">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <button class="panel-toggle" onclick="toggleRightPanel()">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <h3>Fonds de carte & Legende</h3>
+                </div>
+                <div class="panel-content">
+                    <div class="basemaps-section">
+                        <h4><i class="fas fa-globe"></i> Fonds de carte</h4>
+                        <div id="basemapControl">
+                            <div class="basemap-option active" onclick="changeBasemap('OSMStandard')">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23333' width='100' height='100'/%3E%3Ctext x='50' y='50' text-anchor='middle' fill='white' font-size='12'%3EOSM%3C/text%3E%3C/svg%3E" alt="OSM">
+                                <span>OpenStreetMap</span>
+                            </div>
+                            <div class="basemap-option" onclick="changeBasemap('GoogleHybrid')">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23228b22' width='100' height='100'/%3E%3Ctext x='50' y='50' text-anchor='middle' fill='white' font-size='12'%3EGoogle%3C/text%3E%3C/svg%3E" alt="Google">
+                                <span>Google Hybrid</span>
+                            </div>
+                            <div class="basemap-option" onclick="changeBasemap('CartoDbDarkMatter')">
+                                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect fill='%23222' width='100' height='100'/%3E%3Ctext x='50' y='50' text-anchor='middle' fill='white' font-size='12'%3EDark%3C/text%3E%3C/svg%3E" alt="Dark">
+                                <span>CartoDB Dark</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="legend-section">
+                        <h4><i class="fas fa-palette"></i> Legende</h4>
+                        <div id="legendControl">
+                            <!-- Région -->
+                            <div class="legend-item">
+                                <div class="legend-symbol" style="background: transparent; border: 3px solid rgba(35,35,35,1.0);"></div>
+                                <span>Région Kaffrine</span>
+                            </div>
+                            
+                            <!-- Départements -->
+                            <div class="legend-subtitle">
+                                <strong><i class="fas fa-layer-group"></i> Départements</strong>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-symbol" style="background: rgba(126,222,43,1.0); border: 2px solid rgba(35,35,35,1.0);"></div>
+                                <span>BIRKELANE</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-symbol" style="background: rgba(214,97,39,1.0); border: 2px solid rgba(35,35,35,1.0);"></div>
+                                <span>KAFFRINE</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-symbol" style="background: rgba(211,108,199,1.0); border: 2px solid rgba(35,35,35,1.0);"></div>
+                                <span>KOUNGHEUL</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-symbol" style="background: rgba(101,202,175,1.0); border: 2px solid rgba(35,35,35,1.0);"></div>
+                                <span>MALEM HODDAR</span>
+                            </div>
+                            
+                            <!-- Arrondissements -->
+                            <div class="legend-subtitle">
+                                <strong><i class="fas fa-layer-group"></i> Arrondissements</strong>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-symbol" style="background: rgba(212,225,126,1.0); border: 2px solid rgba(35,35,35,1.0);"></div>
+                                <span>DAROU MINAME II</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-symbol" style="background: rgba(168,29,214,1.0); border: 2px solid rgba(35,35,35,1.0);"></div>
+                                <span>GNIBY</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-symbol" style="background: rgba(132,116,220,1.0); border: 2px solid rgba(35,35,35,1.0);"></div>
+                                <span>IDA MOURIDE</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-symbol" style="background: rgba(200,69,76,1.0); border: 2px solid rgba(35,35,35,1.0);"></div>
+                                <span>KATAKEL</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-symbol" style="background: rgba(202,130,41,1.0); border: 2px solid rgba(35,35,35,1.0);"></div>
+                                <span>KEUR MBOUCKI</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-symbol" style="background: rgba(61,142,235,1.0); border: 2px solid rgba(35,35,35,1.0);"></div>
+                                <span>LOUR ESCALE</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-symbol" style="background: rgba(234,59,173,1.0); border: 2px solid rgba(35,35,35,1.0);"></div>
+                                <span>MABO</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-symbol" style="background: rgba(68,214,204,1.0); border: 2px solid rgba(35,35,35,1.0);"></div>
+                                <span>MISSIRAH WADENE</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-symbol" style="background: rgba(87,201,45,1.0); border: 2px solid rgba(35,35,35,1.0);"></div>
+                                <span>SAGNA</span>
+                            </div>
+                            
+                            <!-- Infrastructure -->
+                            <div class="legend-subtitle">
+                                <strong><i class="fas fa-road"></i> Infrastructure</strong>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-line" style="background: rgba(255,0,0,1.0); height: 3px;"></div>
+                                <span>Routes</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-point" style="background: rgba(83,83,83,1.0); border: 2px solid rgba(247,247,247,1.0); width: 8px; height: 8px; border-radius: 50%;"></div>
+                                <span>Localités</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-point" style="background: rgba(184,8,8,1.0); width: 10px; height: 10px; border-radius: 50%;"></div>
+                                <span>Écoles</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Boutons flottants -->
+        <div class="floating-controls">
+            <button class="float-btn" onclick="locateUser()" title="Localiser ma position">
+                <i class="fas fa-crosshairs"></i>
+            </button>
+            <button class="float-btn" onclick="resetZoom()" title="Vue complete">
+                <i class="fas fa-expand-arrows-alt"></i>
+            </button>
+            <button class="float-btn" onclick="toggleMeasure()" title="Outil de mesure">
+                <i class="fas fa-ruler"></i>
+            </button>
+        </div>
+
+        <!-- Boutons pour panneaux mobile -->
+        <div class="mobile-panel-buttons">
+            <button class="mobile-panel-btn" onclick="toggleLeftPanel()" title="Couches">
+                <i class="fas fa-th"></i>
+            </button>
+            <button class="mobile-panel-btn" onclick="toggleRightPanel()" title="Légende">
+                <i class="fas fa-palette"></i>
+            </button>
+            <button class="mobile-panel-btn" onclick="showInstallModal()" title="Installer">
+                <i class="fas fa-download"></i>
+            </button>
+        </div>
+
+        <!-- Modals -->
+        <div id="aboutModal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close" onclick="closeModal('aboutModal')">&times;</span>
+                <h2><i class="fas fa-info-circle"></i> A propos</h2>
+                <p>Cette application Web GIS presente les donnees geographiques de la region de Kaffrine au Senegal.</p>
+                <p><strong>Donnees disponibles:</strong></p>
+                <ul>
+                    <li>Limites administratives (Regions, Departements, Arrondissements)</li>
+                    <li>Reseau routier</li>
+                    <li>Localites</li>
+                    <li>Ecoles</li>
+                </ul>
+                <p><strong>Technologies:</strong> Leaflet.js, QGIS2WEB, OpenStreetMap</p>
+                <p><strong>Développeur:</strong></p>
+                <p>
+                    <strong>Mouhsine Abdallah Babacar DIAO</strong><br>
+                    📱: 778379457<br>
+                    📧: mouhsineabdallahbabacar@gmail.com<br>
+                    📧: diao.mouhsine@uam.edu.sn
+                </p>
+            </div>
+        </div>
+
+        <!-- Modal d'installation PWA -->
+        <div id="installModal" class="modal">
+            <div class="modal-content" style="max-width: 500px; text-align: center;">
+                <span class="modal-close" onclick="closeModal('installModal')">&times;</span>
+                <div style="padding: 30px;">
+                    <div style="font-size: 4rem; margin-bottom: 20px;">📱</div>
+                    <h2 style="margin-bottom: 20px; color: #333;">Installer GéoWeb Kaffrine</h2>
+                    <p style="margin-bottom: 25px; color: #666; line-height: 1.6;">
+                        Installez cette application sur votre téléphone pour un accès rapide et hors ligne.
+                    </p>
+                    <div style="background: #f8f9fa; border-radius: 12px; padding: 20px; margin-bottom: 25px; text-align: left;">
+                        <h3 style="font-size: 1rem; margin-bottom: 15px; color: #333;">
+                            <i class="fas fa-info-circle" style="color: #667eea;"></i> Comment installer :
+                        </h3>
+                        <div id="installInstructions">
+                            <p><strong>Android (Chrome) :</strong></p>
+                            <ol style="margin-left: 20px; line-height: 1.8;">
+                                <li>Cliquez sur ⋮ en haut à droite</li>
+                                <li>Sélectionnez "Ajouter à l'écran d'accueil"</li>
+                            </ol>
+                            <p style="margin-top: 10px;"><strong>iOS (Safari) :</strong></p>
+                            <ol style="margin-left: 20px; line-height: 1.8;">
+                                <li>Cliquez sur ⎘ en bas</li>
+                                <li>Sélectionnez "Sur l'écran d'accueil"</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <button onclick="closeModal('installModal')" class="btn-primary" style="width: 100%;">
+                        <i class="fas fa-check"></i> J'ai compris
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Requête Spatiale AMÉLIORÉ -->
+        <div id="spatialQueryModal" class="modal">
+            <div class="modal-content" style="max-width: 500px;">
+                <span class="modal-close" onclick="closeModal('spatialQueryModal')">&times;</span>
+                <h2><i class="fas fa-draw-polygon"></i> Requête Spatiale</h2>
+                <div style="padding: 20px;">
+                    
+                    <!-- Étape 1: Choisir la couche cible -->
+                    <div id="spatialStep1" style="margin-bottom: 20px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #667eea;">1. Que cherchez-vous ?</label>
+                        <select id="spatialTargetLayer" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+                            <option value="">-- Sélectionner --</option>
+                            <option value="Ecoles">Écoles</option>
+                            <option value="Localites">Localités</option>
+                            <option value="Routes">Routes</option>
+                            <option value="Arrondissement">Arrondissements</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Étape 2: Type de requête -->
+                    <div id="spatialStep2" style="margin-bottom: 20px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #667eea;">2. Type de requête:</label>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <button onclick="setSpatialQueryType('buffer')" class="btn-spatial-type" id="btnTypeBuffer" style="padding: 12px; border: 2px solid #667eea; background: #667eea; color: white; border-radius: 8px; cursor: pointer; text-align: left;">
+                                <i class="fas fa-circle-notch"></i> <b>Buffer (zone tampon)</b><br>
+                                <small style="opacity: 0.9;">Trouver tout dans un rayon de X mètres</small>
+                            </button>
+                            <button onclick="setSpatialQueryType('nearest')" class="btn-spatial-type" id="btnTypeNearest" style="padding: 12px; border: 2px solid #e0e0e0; background: white; color: #333; border-radius: 8px; cursor: pointer; text-align: left;">
+                                <i class="fas fa-bullseye"></i> <b>Les plus proches</b><br>
+                                <small>Trouver les X éléments les plus proches</small>
+                            </button>
+                            <button onclick="setSpatialQueryType('click')" class="btn-spatial-type" id="btnTypeClick" style="padding: 12px; border: 2px solid #e0e0e0; background: white; color: #333; border-radius: 8px; cursor: pointer; text-align: left;">
+                                <i class="fas fa-hand-pointer"></i> <b>Cliquer sur la carte</b><br>
+                                <small>Cliquez pour voir ce qui est proche</small>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Étape 3: Paramètres du buffer -->
+                    <div id="spatialBufferParams" style="margin-bottom: 20px; display: none;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #667eea;">3. Distance du buffer:</label>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 15px;">
+                            <button onclick="setBufferDistance(5)" class="btn-buffer" data-dist="5" style="padding: 10px; border: 2px solid #e0e0e0; background: white; border-radius: 6px; cursor: pointer; font-weight: 600;">5m</button>
+                            <button onclick="setBufferDistance(10)" class="btn-buffer" data-dist="10" style="padding: 10px; border: 2px solid #e0e0e0; background: white; border-radius: 6px; cursor: pointer; font-weight: 600;">10m</button>
+                            <button onclick="setBufferDistance(50)" class="btn-buffer" data-dist="50" style="padding: 10px; border: 2px solid #e0e0e0; background: white; border-radius: 6px; cursor: pointer; font-weight: 600;">50m</button>
+                            <button onclick="setBufferDistance(100)" class="btn-buffer" data-dist="100" style="padding: 10px; border: 2px solid #e0e0e0; background: white; border-radius: 6px; cursor: pointer; font-weight: 600;">100m</button>
+                            <button onclick="setBufferDistance(500)" class="btn-buffer" data-dist="500" style="padding: 10px; border: 2px solid #e0e0e0; background: white; border-radius: 6px; cursor: pointer; font-weight: 600;">500m</button>
+                            <button onclick="setBufferDistance(1000)" class="btn-buffer" data-dist="1000" style="padding: 10px; border: 2px solid #667eea; background: #667eea; color: white; border-radius: 6px; cursor: pointer; font-weight: 600;">1km</button>
+                            <button onclick="setBufferDistance(2000)" class="btn-buffer" data-dist="2000" style="padding: 10px; border: 2px solid #e0e0e0; background: white; border-radius: 6px; cursor: pointer; font-weight: 600;">2km</button>
+                            <button onclick="setBufferDistance(5000)" class="btn-buffer" data-dist="5000" style="padding: 10px; border: 2px solid #e0e0e0; background: white; border-radius: 6px; cursor: pointer; font-weight: 600;">5km</button>
+                        </div>
+                        <input type="hidden" id="bufferDistanceValue" value="1000">
+                    </div>
+                    
+                    <!-- Étape 3 bis: Paramètres nearest -->
+                    <div id="spatialNearestParams" style="margin-bottom: 20px; display: none;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #667eea;">3. Nombre d'éléments:</label>
+                        <div style="display: flex; gap: 10px; align-items: center;">
+                            <input type="range" id="nearestCount" min="1" max="20" value="5" style="flex: 1;" oninput="document.getElementById('nearestCountDisplay').textContent = this.value">
+                            <span id="nearestCountDisplay" style="font-weight: 600; min-width: 30px; text-align: center;">5</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Bouton exécuter -->
+                    <div id="spatialExecute" style="margin-bottom: 20px;">
+                        <button onclick="executeAdvancedSpatialQuery()" class="btn-primary" style="width: 100%; padding: 15px; font-size: 1.1rem;">
+                            <i class="fas fa-play"></i> LANCER LA RECHERCHE
+                        </button>
+                    </div>
+                    
+                    <!-- Instructions pour clic -->
+                    <div id="spatialClickInstructions" style="display: none; padding: 15px; background: #f0f4ff; border-radius: 8px; margin-bottom: 15px;">
+                        <p style="margin: 0; color: #667eea;"><i class="fas fa-info-circle"></i> Cliquez sur la carte pour définir le point de recherche</p>
+                    </div>
+                    
+                    <!-- Résultats -->
+                    <div id="spatialAdvancedResults" style="display: none;">
+                        <div id="spatialAdvancedResultsContent" style="max-height: 300px; overflow-y: auto; margin-bottom: 10px;"></div>
+                        <button onclick="clearAdvancedSpatialQuery()" class="btn-secondary" style="width: 100%; padding: 10px;">
+                            <i class="fas fa-trash"></i> Nouvelle recherche
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Requête Attributaire AMÉLIORÉ -->
+        <div id="attributeQueryModal" class="modal">
+            <div class="modal-content">
+                <span class="modal-close" onclick="closeModal('attributeQueryModal')">&times;</span>
+                <h2><i class="fas fa-database"></i> Requête Attributaire</h2>
+                <div style="padding: 20px;">
+                    <!-- Étape 1: Choisir la couche -->
+                    <div id="attrStep1" style="margin-bottom: 20px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #667eea;">1. Choisir la couche:</label>
+                        <select id="attrLayerSelect" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;" onchange="updateAttrFields()">
+                            <option value="">-- Sélectionner une couche --</option>
+                            <option value="Ecoles">Écoles</option>
+                            <option value="Localites">Localités</option>
+                            <option value="Departement">Départements</option>
+                            <option value="Arrondissement">Arrondissements</option>
+                            <option value="Region">Régions</option>
+                            <option value="Routes">Routes</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Étape 2: Choisir le champ -->
+                    <div id="attrStep2" style="margin-bottom: 20px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #667eea;">2. Choisir le champ:</label>
+                        <select id="attrFieldSelect" style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem;">
+                            <option value="">-- Sélectionner un champ --</option>
+                            <option value="Nom">Nom</option>
+                            <option value="code">Code</option>
+                            <option value="dept">Département</option>
+                            <option value="arr">Arrondissement</option>
+                            <option value="type">Type</option>
+                            <option value="*">Tous les champs</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Étape 3: Type de recherche -->
+                    <div id="attrStep3" style="margin-bottom: 20px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #667eea;">3. Type de recherche:</label>
+                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <button onclick="setAttrOperator('equals')" class="btn-operator" id="btnOpEquals" style="flex: 1; padding: 8px; border: 2px solid #667eea; background: #667eea; color: white; border-radius: 6px; cursor: pointer;">= Égal</button>
+                            <button onclick="setAttrOperator('contains')" class="btn-operator" id="btnOpContains" style="flex: 1; padding: 8px; border: 2px solid #e0e0e0; background: white; color: #333; border-radius: 6px; cursor: pointer;">Contient</button>
+                            <button onclick="setAttrOperator('starts')" class="btn-operator" id="btnOpStarts" style="flex: 1; padding: 8px; border: 2px solid #e0e0e0; background: white; color: #333; border-radius: 6px; cursor: pointer;">Commence par</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Étape 4: Valeur à chercher -->
+                    <div id="attrStep4" style="margin-bottom: 20px;">
+                        <label style="display: block; font-weight: 600; margin-bottom: 8px; color: #667eea;">4. Valeur à chercher:</label>
+                        <input type="text" id="attrSearchValue" placeholder="Tapez la valeur..." style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 1rem; margin-bottom: 10px;">
+                        <button onclick="executeAdvancedAttrQuery()" class="btn-primary" style="width: 100%; padding: 12px; font-size: 1rem;">
+                            <i class="fas fa-search"></i> LANCER LA RECHERCHE
+                        </button>
+                    </div>
+                    
+                    <!-- Résultats -->
+                    <div id="attrResults" style="display: none; margin-top: 15px;">
+                        <div id="attrResultsContent" style="max-height: 300px; overflow-y: auto;"></div>
+                        <button onclick="clearAttrQuery()" class="btn-secondary" style="width: 100%; margin-top: 10px; padding: 10px;">
+                            <i class="fas fa-trash"></i> Nouvelle recherche
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scripts -->
+        <script src="js/leaflet.js"></script>
+        <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/multi-style-layer.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        
+        <!-- Donnees -->
+        <script src="data/Region_3.js"></script>
+        <script src="data/Departement_4.js"></script>
+        <script src="data/Arrondissement_5.js"></script>
+        <script src="data/Routes_6.js"></script>
+        <script src="data/Localites_7.js"></script>
+        <script src="data/Ecoles_8.js"></script>
+        
+<!-- Application moderne -->
+<script src="js/app-modern.js?v=21"></script>
+
+<!-- Service Worker Registration -->
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js?v=4')
+                .then((registration) => {
+                    console.log('[PWA] Service Worker registered:', registration.scope);
+                })
+                .catch((error) => {
+                    console.error('[PWA] Service Worker registration failed:', error);
+                });
+        });
+    }
+</script>
