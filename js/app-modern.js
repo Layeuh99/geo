@@ -1029,6 +1029,128 @@ function toggleMobileMenu() {
 }
 
 // ============================================
+// ALIAS DE FONCTIONS - TERMES UTILISATEURS
+// ============================================
+
+// Fonctions conviviales pour les utilisateurs
+function afficherCouches() {
+    toggleLeftPanel();
+}
+
+function afficherLegende() {
+    toggleRightPanel();
+}
+
+function rechercherSurLaCarte() {
+    showSpatialQuery();
+}
+
+function rechercherParAttribut() {
+    showAttributeQuery();
+}
+
+function mesurerDistance() {
+    toggleMeasure();
+}
+
+function exporterDonnees() {
+    // Ouvrir le menu déroulant d'export
+    const dropdown = document.querySelector('.navbar-menu .dropdown:nth-child(5) .dropdown-toggle');
+    if (dropdown) dropdown.click();
+}
+
+function voirInformations() {
+    showAbout();
+}
+
+function changerFondDeCarte() {
+    // Ouvrir le panneau droit pour les fonds de carte
+    toggleRightPanel();
+}
+
+function localiserMaPosition() {
+    locateUser();
+}
+
+function voirVueComplete() {
+    resetZoom();
+}
+
+// Alias pour les fonctions de requête plus explicites
+function trouverEcolesProches() {
+    showSpatialQuery();
+    // Pré-sélectionner les options appropriées
+    setTimeout(() => {
+        const targetLayer = document.getElementById('spatialTargetLayer');
+        if (targetLayer) {
+            targetLayer.value = 'Ecoles';
+            setSpatialQueryType('buffer');
+        }
+    }, 100);
+}
+
+function chercherLocaliteParNom() {
+    showAttributeQuery();
+    // Pré-sélectionner les options appropriées
+    setTimeout(() => {
+        const layerSelect = document.getElementById('attrLayerSelect');
+        if (layerSelect) {
+            layerSelect.value = 'Localites';
+            updateAttrFields();
+        }
+    }, 100);
+}
+
+function analyserRegion() {
+    showSpatialQuery();
+    // Pré-sélectionner les options appropriées
+    setTimeout(() => {
+        const targetLayer = document.getElementById('spatialTargetLayer');
+        if (targetLayer) {
+            targetLayer.value = 'Departement';
+            setSpatialQueryType('buffer');
+        }
+    }, 100);
+}
+
+// ============================================
+// GESTION DES ACTIONS RAPIDES
+// ============================================
+function toggleQuickActions() {
+    const quickActions = document.getElementById('quickActions');
+    const toggle = document.querySelector('.quick-actions-toggle');
+    
+    if (quickActions.classList.contains('visible')) {
+        quickActions.classList.remove('visible');
+        toggle.classList.remove('active');
+        toggle.innerHTML = '<i class="fas fa-rocket"></i>';
+    } else {
+        quickActions.classList.add('visible');
+        toggle.classList.add('active');
+        toggle.innerHTML = '<i class="fas fa-times"></i>';
+    }
+}
+
+// Fermer les actions rapides au clic sur la carte
+document.addEventListener('DOMContentLoaded', function() {
+    // Ajouter l'écouteur après le chargement de la carte
+    setTimeout(() => {
+        if (map) {
+            map.on('click', function() {
+                const quickActions = document.getElementById('quickActions');
+                const toggle = document.querySelector('.quick-actions-toggle');
+                
+                if (quickActions && quickActions.classList.contains('visible')) {
+                    quickActions.classList.remove('visible');
+                    toggle.classList.remove('active');
+                    toggle.innerHTML = '<i class="fas fa-rocket"></i>';
+                }
+            });
+        }
+    }, 1000);
+});
+
+// ============================================
 // FONCTIONS UI - MODALS
 // ============================================
 function showAbout() {
