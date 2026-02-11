@@ -286,6 +286,18 @@
     font-weight: 500;
 }
 
+.action-btn small {
+    display: block;
+    font-size: 0.75rem;
+    color: #667eea;
+    margin-top: 2px;
+    opacity: 0.8;
+}
+
+.action-btn:hover small {
+    opacity: 1;
+}
+
 /* Bouton toggle pour les actions rapides */
 .quick-actions-toggle {
     position: fixed;
@@ -415,6 +427,63 @@
 }
 
 /* ============================================
+   HISTORIQUE DES RECHERCHES
+   ============================================ */
+#historiqueRecherches {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+}
+
+#historiqueRecherches h5 {
+    color: #667eea;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.historique-liste {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.historique-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    background: #f8f9ff;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    font-size: 0.8rem;
+}
+
+.historique-item:hover {
+    background: #e8ecff;
+}
+
+.historique-type {
+    background: #667eea;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: 500;
+}
+
+.historique-valeur {
+    flex: 1;
+    margin: 0 10px;
+    color: #333;
+}
+
+.historique-date {
+    color: #666;
+    font-size: 0.7rem;
+}
+
+/* ============================================
    RESPONSIVE MOBILE - STYLES UI
    ============================================ */
 @media (max-width: 768px) {
@@ -488,22 +557,40 @@
         right: 10px;
         max-width: none;
         bottom: 80px;
-        max-height: 50vh;
+        max-height: 45vh;
+        padding: 15px;
     }
     
     .quick-actions-toggle {
         width: 50px;
         height: 50px;
         font-size: 1.1rem;
+        bottom: 15px;
+        left: 15px;
     }
     
     .action-buttons {
         grid-template-columns: 1fr;
+        gap: 6px;
     }
     
     .action-btn {
-        padding: 10px 12px;
+        padding: 8px 10px;
         font-size: 0.85rem;
+        min-height: 44px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
+    }
+    
+    .action-btn i {
+        font-size: 0.9rem;
+        margin-bottom: 2px;
+    }
+    
+    .action-btn small {
+        font-size: 0.7rem;
+        margin-top: 1px;
     }
     
     /* Notifications sur mobile */

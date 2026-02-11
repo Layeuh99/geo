@@ -360,17 +360,20 @@
                 <div class="action-category">
                     <h4><i class="fas fa-search"></i> Rechercher</h4>
                     <div class="action-buttons">
-                        <button onclick="trouverEcolesProches()" class="action-btn primary">
+                        <button onclick="trouverEcolesProches()" class="action-btn primary" title="Cliquez sur la carte pour chercher les écoles à proximité">
                             <i class="fas fa-graduation-cap"></i>
                             <span>Écoles proches</span>
+                            <small>Cliquez sur la carte</small>
                         </button>
-                        <button onclick="chercherLocaliteParNom()" class="action-btn">
+                        <button onclick="chercherLocaliteParNom()" class="action-btn" title="Tapez le début du nom pour voir les suggestions">
                             <i class="fas fa-map-marker-alt"></i>
                             <span>Localité par nom</span>
+                            <small>Recherche auto</small>
                         </button>
-                        <button onclick="analyserRegion()" class="action-btn">
+                        <button onclick="analyserRegion()" class="action-btn" title="Analysez une zone géographique spécifique">
                             <i class="fas fa-map"></i>
                             <span>Analyser une région</span>
+                            <small>Zone spécifique</small>
                         </button>
                     </div>
                 </div>
@@ -378,17 +381,20 @@
                 <div class="action-category">
                     <h4><i class="fas fa-eye"></i> Explorer</h4>
                     <div class="action-buttons">
-                        <button onclick="afficherCouches()" class="action-btn">
+                        <button onclick="afficherCouches()" class="action-btn" title="Affiche ou masque les différentes couches de données">
                             <i class="fas fa-layer-group"></i>
                             <span>Gérer les couches</span>
+                            <small>Afficher/masquer</small>
                         </button>
-                        <button onclick="changerFondDeCarte()" class="action-btn">
+                        <button onclick="changerFondDeCarte()" class="action-btn" title="Changez le fond de carte (satellite, plan, etc.)">
                             <i class="fas fa-globe"></i>
                             <span>Changer le fond</span>
+                            <small>Plusieurs styles</small>
                         </button>
-                        <button onclick="voirVueComplete()" class="action-btn">
+                        <button onclick="voirVueComplete()" class="action-btn" title="Affiche toute la région de Kaffrine">
                             <i class="fas fa-expand"></i>
                             <span>Vue complète</span>
+                            <small>Toute la région</small>
                         </button>
                     </div>
                 </div>
@@ -396,20 +402,26 @@
                 <div class="action-category">
                     <h4><i class="fas fa-tools"></i> Outils</h4>
                     <div class="action-buttons">
-                        <button onclick="mesurerDistance()" class="action-btn">
+                        <button onclick="mesurerDistance()" class="action-btn" title="Mesurez les distances et surfaces sur la carte">
                             <i class="fas fa-ruler"></i>
                             <span>Mesurer</span>
+                            <small>Distances/surfaces</small>
                         </button>
-                        <button onclick="localiserMaPosition()" class="action-btn">
+                        <button onclick="localiserMaPosition()" class="action-btn" title="Trouve votre position actuelle sur la carte">
                             <i class="fas fa-crosshairs"></i>
                             <span>Ma position</span>
+                            <small>GPS localisation</small>
                         </button>
-                        <button onclick="exporterDonnees()" class="action-btn">
+                        <button onclick="exporterDonnees()" class="action-btn" title="Téléchargez les données en différents formats">
                             <i class="fas fa-download"></i>
                             <span>Exporter</span>
+                            <small>PDF, Excel, etc.</small>
                         </button>
                     </div>
                 </div>
+                
+                <!-- Historique des recherches -->
+                <div id="historiqueRecherches"></div>
             </div>
         </div>
 

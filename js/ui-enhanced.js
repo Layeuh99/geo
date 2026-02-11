@@ -55,6 +55,13 @@ function voirVueComplete() {
 // Alias pour les fonctions de requête plus explicites
 function trouverEcolesProches() {
     showSpatialQuery();
+    // Sauvegarder la recherche
+    sauvegarderRecherche({
+        type: 'spatiale',
+        valeur: 'Écoles proches',
+        description: 'Recherche des écoles dans un rayon défini'
+    });
+    
     // Pré-sélectionner les options appropriées
     setTimeout(() => {
         const targetLayer = document.getElementById('spatialTargetLayer');
@@ -67,6 +74,13 @@ function trouverEcolesProches() {
 
 function chercherLocaliteParNom() {
     showAttributeQuery();
+    // Sauvegarder la recherche
+    sauvegarderRecherche({
+        type: 'attributaire',
+        valeur: 'Localité par nom',
+        description: 'Recherche de localités par nom'
+    });
+    
     // Pré-sélectionner les options appropriées
     setTimeout(() => {
         const layerSelect = document.getElementById('attrLayerSelect');
@@ -79,6 +93,13 @@ function chercherLocaliteParNom() {
 
 function analyserRegion() {
     showSpatialQuery();
+    // Sauvegarder la recherche
+    sauvegarderRecherche({
+        type: 'spatiale',
+        valeur: 'Analyse région',
+        description: 'Analyse spatiale d\'une région spécifique'
+    });
+    
     // Pré-sélectionner les options appropriées
     setTimeout(() => {
         const targetLayer = document.getElementById('spatialTargetLayer');
@@ -241,6 +262,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialiser l'auto-complétion
     initAutocomplete();
     
+    // Afficher l'historique des recherches
+    setTimeout(() => {
+        afficherHistorique();
+    }, 500);
+    
     // Fermer les actions rapides au clic sur la carte
     setTimeout(() => {
         if (typeof map !== 'undefined') {
@@ -257,6 +283,69 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 1000);
 });
+
+// ============================================
+// HISTORIQUE DES RECHERCHES
+// ============================================
+function sauvegarderRecherche(requete) {
+    const historique = JSON.parse(localStorage.getItem('recherches_geo') || '[]');
+    const nouvelleRecherche = {
+        ...requete,
+        id: Date.now(),
+        timestamp: new Date().toISOString()
+    };
+    
+    // Éviter les doublons
+    const existeDeja = historique.some(r => 
+        r.type === requete.type && r.valeur === requete.valeur
+    );
+    
+    if (!existeDeja) {
+        historique.unshift(nouvelleRecherche);
+        // Garder seulement les 10 dernières recherches
+        if (historique.length > 10) {
+            historique.pop();
+        }
+        localStorage.setItem('recherches_geo', JSON.stringify(historique));
+    }
+}
+
+function getHistoriqueRecherches() {
+    return JSON.parse(localStorage.getItem('recherches_geo') || '[]');
+}
+
+function afficherHistorique() {
+    const historique = getHistoriqueRecherches();
+    const container = document.getElementById('historiqueRecherches');
+    
+    if (!container || historique.length === 0) return;
+    
+    container.innerHTML = '<h5>Recherches récentes</h5>';
+    const liste = document.createElement('div');
+    liste.className = 'historique-liste';
+    
+    historique.slice(0, 5).forEach(recherche => {
+        const item = document.createElement('div');
+        item.className = 'historique-item';
+        item.innerHTML = `
+            <span class="historique-type">${recherche.type}</span>
+            <span class="historique-valeur">${recherche.valeur}</span>
+            <span class="historique-date">${new Date(recherche.timestamp).toLocaleDateString('fr-FR')}</span>
+        `;
+        item.onclick = () => relancerRecherche(recherche);
+        liste.appendChild(item);
+    });
+    
+    container.appendChild(liste);
+}
+
+function relancerRecherche(recherche) {
+    if (recherche.type === 'spatiale') {
+        trouverEcolesProches();
+    } else if (recherche.type === 'attributaire') {
+        chercherLocaliteParNom();
+    }
+}
 
 // ============================================
 // UTILITAIRES UI
