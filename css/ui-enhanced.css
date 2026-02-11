@@ -7,6 +7,17 @@
 /* ============================================
    GUIDE D'UTILISATION - BIENVENUE
    ============================================ */
+.welcome-modal .modal-content {
+    background: white;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    animation: slideUp 0.3s ease;
+}
+
 .welcome-guide {
     background: #f8f9ff;
     border-radius: 8px;
@@ -492,6 +503,8 @@
         width: 95%;
         max-height: 85vh;
         margin: 10px;
+        overflow-y: auto;
+        padding-bottom: 20px;
     }
     
     .welcome-guide {
