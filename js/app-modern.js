@@ -72,6 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initEventListeners();
     initAutoSavePosition();
     initTheme();
+    initAutocomplete(); // Initialiser l'auto-complétion
     updateCoordinates();
     updateScale();
     updateZoomLevel();
@@ -1502,8 +1503,31 @@ function highlightFeaturePermanent(layer) {
     }
 }
 
+function closeAutocomplete() {
+    const list = document.getElementById('autocomplete-list');
+    if (list) {
+        list.remove();
+    }
+}
+
+function updateAttrFieldsWithAutocomplete() {
+    const layerSelect = document.getElementById('attrLayerSelect');
+    const fieldSelect = document.getElementById('attributeField');
+    const valueInput = document.getElementById('attributeValue');
+    
+    if (!layerSelect || !fieldSelect || !valueInput) return;
+    
+    const layerName = layerSelect.value;
+    const fieldName = fieldSelect.value;
+    
+    // Configurer l'auto-complétion pour l'input de valeur
+    if (layerName && fieldName) {
+        setupAutocomplete('attributeValue', layerName, fieldName);
+    }
+}
+
 // ============================================
-// REQUÃŠTES ATTRIBUTAIRES - CORRIGÃ‰
+// REQUÊTES ATTRIBUTAIRES - CORRIGÉ
 // ============================================
 function executeAttributeQuery() {
     let layerName = document.getElementById('attributeLayer').value;
@@ -2764,29 +2788,23 @@ function updateAttrFields() {
             { value: 'code', label: 'Code' }
         ],
         'Arrondissement': [
-            { value: 'arr', label: 'Nom de l\'arrondissement' },
+            { value: 'Nom', label: 'Nom' },
             { value: 'code', label: 'Code' },
             { value: 'dept', label: 'DÃ©partement' }
-        ],
-        'Region': [
-            { value: 'region', label: 'Nom de la rÃ©gion' },
-            { value: 'code', label: 'Code' }
-        ],
-        'Routes': [
-            { value: 'type', label: 'Type de route' },
-            { value: 'Nom', label: 'Nom' }
         ]
     };
     
-    let fields = layerFields[layerName] || [];
-    fields = [...commonFields, ...fields];
+    let fields = commonFields.concat(layerFields[layerName] || []);
     
-    fields.forEach(field => {
+    fields.forEach(function(field) {
         let option = document.createElement('option');
         option.value = field.value;
         option.textContent = field.label;
         fieldSelect.appendChild(option);
     });
+    
+    // Configurer l'auto-complétion pour le champ de valeur
+    updateAttrFieldsWithAutocomplete();
 }
 
 function executeAdvancedAttrQuery() {

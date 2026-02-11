@@ -848,11 +848,101 @@ z-index: 500;
 .modal-content h2 {
     padding: 20px 20px 0 20px;
     color: #333;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    margin-bottom: 10px;
 }
 
+/* ============================================
+   SECTION MÉTADONNÉES
+   ============================================ */
+.metadata-section {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.metadata-section h4 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.metadata-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 0.9rem;
+}
+
+.metadata-item:last-child {
+    border-bottom: none;
+}
+
+.metadata-item strong {
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+}
+
+.metadata-item strong i {
+    color: #667eea;
+    width: 16px;
+    text-align: center;
+}
+
+.metadata-item span {
+    color: #666;
+    text-align: right;
+    flex: 1;
+    margin-left: 10px;
+}
+
+/* ============================================
+   AUTO-COMPLÉTION POUR REQUÊTES
+   ============================================ */
+.autocomplete-container {
+    position: relative;
+    width: 100%;
+}
+
+.autocomplete-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-top: none;
+    border-radius: 0 0 4px 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.autocomplete-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.2s ease;
+}
+
+.autocomplete-item:hover,
+.autocomplete-item.selected {
+    background-color: #f0f4ff;
+}
+
+.autocomplete-item:last-child {
+    border-bottom: none;
+}
+
+/* ============================================
+   STYLES MODALS SUPPLÉMENTAIRES
+   ============================================ */
 .modal-content p {
     padding: 0 20px;
     margin: 15px 0;

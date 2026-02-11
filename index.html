@@ -47,29 +47,25 @@
             </div>
             <ul class="navbar-menu" role="menubar" aria-label="Menu principal">
                 <li><a href="#" onclick="showHome()" role="menuitem" aria-label="Accueil"><i class="fas fa-home" aria-hidden="true"></i> <span>Accueil</span></a></li>
-                <li><a href="#" onclick="toggleLeftPanel()" role="menuitem" aria-label="Panneau des couches"><i class="fas fa-th" aria-hidden="true"></i> <span>Couches</span></a></li>
-                <li><a href="#" onclick="toggleRightPanel()" role="menuitem" aria-label="Fonds de carte et légende"><i class="fas fa-palette" aria-hidden="true"></i> <span>Fonds & Légende</span></a></li>
-                <li><a href="#" onclick="showAbout()" role="menuitem" aria-label="À propos de l'application"><i class="fas fa-info-circle" aria-hidden="true"></i> <span>À propos</span></a></li>
-                <li><a href="#" onclick="showSpatialQuery()" role="menuitem" aria-label="Requête spatiale"><i class="fas fa-draw-polygon" aria-hidden="true"></i> <span>Requête spatiale</span></a></li>
-                <li><a href="#" onclick="showAttributeQuery()" role="menuitem" aria-label="Requête attributaire"><i class="fas fa-database" aria-hidden="true"></i> <span>Requête attributaire</span></a></li>
-                <li><a href="#" onclick="showAttributeQuery()"><i class="fas fa-database"></i> Requete attributaire</a></li>
+                <li><a href="#" onclick="toggleLeftPanel()" role="menuitem" aria-label="Panneau des couches"><i class="fas fa-layer-group" aria-hidden="true"></i> <span>Couches</span></a></li>
+                <li><a href="#" onclick="toggleRightPanel()" role="menuitem" aria-label="Fonds de carte et légende"><i class="fas fa-map" aria-hidden="true"></i> <span>Carte & Légende</span></a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle"><i class="fas fa-download"></i> Telechargement <i class="fas fa-chevron-down"></i></a>
+                    <a href="#" class="dropdown-toggle"><i class="fas fa-search"></i> Analyser <i class="fas fa-chevron-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" onclick="showSpatialQuery()"><i class="fas fa-draw-polygon"></i> Requête spatiale</a></li>
+                        <li><a href="#" onclick="showAttributeQuery()"><i class="fas fa-filter"></i> Requête attributaire</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle"><i class="fas fa-download"></i> Exporter <i class="fas fa-chevron-down"></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="#" onclick="downloadData('geojson')"><i class="fas fa-file-code"></i> GeoJSON</a></li>
                         <li><a href="#" onclick="downloadData('shapefile')"><i class="fas fa-file-archive"></i> Shapefile</a></li>
                         <li><a href="#" onclick="downloadData('kml')"><i class="fas fa-file-alt"></i> KML</a></li>
                     </ul>
                 </li>
-                <li><a href="#" onclick="toggleMeasure()"><i class="fas fa-ruler-combined"></i> Outils de mesure</a></li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle"><i class="fas fa-search-plus"></i> Zoom <i class="fas fa-chevron-down"></i></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#" onclick="map.zoomIn()"><i class="fas fa-plus"></i> Zoom Avant</a></li>
-                        <li><a href="#" onclick="map.zoomOut()"><i class="fas fa-minus"></i> Zoom Arriere</a></li>
-                        <li><a href="#" onclick="resetZoom()"><i class="fas fa-expand"></i> Vue complete</a></li>
-                    </ul>
-                </li>
+                <li><a href="#" onclick="toggleMeasure()" role="menuitem" aria-label="Outils de mesure"><i class="fas fa-ruler" aria-hidden="true"></i> <span>Mesurer</span></a></li>
+                <li><a href="#" onclick="showAbout()" role="menuitem" aria-label="À propos"><i class="fas fa-info-circle" aria-hidden="true"></i> <span>À propos</span></a></li>
             </ul>
             <div class="navbar-toggle" onclick="toggleMobileMenu()">
                 <i class="fas fa-bars"></i>
@@ -286,6 +282,36 @@
                             <div class="legend-item">
                                 <div class="legend-point" style="background: rgba(184,8,8,1.0); width: 10px; height: 10px; border-radius: 50%;"></div>
                                 <span>Écoles</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metadata-section">
+                        <h4><i class="fas fa-info-circle"></i> Métadonnées</h4>
+                        <div id="metadataContent">
+                            <div class="metadata-item">
+                                <strong><i class="fas fa-database"></i> Source:</strong>
+                                <span>ANSD Sénégal - RGPH 2023</span>
+                            </div>
+                            <div class="metadata-item">
+                                <strong><i class="fas fa-calendar"></i> Date:</strong>
+                                <span>2024-06-15</span>
+                            </div>
+                            <div class="metadata-item">
+                                <strong><i class="fas fa-globe"></i> Projection:</strong>
+                                <span>WGS84 (EPSG:4326)</span>
+                            </div>
+                            <div class="metadata-item">
+                                <strong><i class="fas fa-crosshairs"></i> Précision:</strong>
+                                <span>±10m (GPS)</span>
+                            </div>
+                            <div class="metadata-item">
+                                <strong><i class="fas fa-exclamation-triangle"></i> Limites:</strong>
+                                <span>Données administratives uniquement</span>
+                            </div>
+                            <div class="metadata-item">
+                                <strong><i class="fas fa-envelope"></i> Contact:</strong>
+                                <span>geo@ansd.sn</span>
                             </div>
                         </div>
                     </div>
