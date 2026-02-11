@@ -5,8 +5,25 @@
  */
 
 /* ============================================
-   GUIDE D'UTILISATION - BIENVENUE
+   CORRECTION DU DÉFILEMENT MODAL
    ============================================ */
+/* Forcer le défilement pour la modal de bienvenue */
+.welcome-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 2000;
+    overflow-y: auto;
+    display: none;
+}
+
+.welcome-modal.active {
+    display: block;
+}
+
 .welcome-modal .modal-content {
     background: white;
     border-radius: 8px;
@@ -16,6 +33,8 @@
     overflow-y: auto;
     box-shadow: 0 10px 40px rgba(0,0,0,0.3);
     animation: slideUp 0.3s ease;
+    margin: 20px auto;
+    position: relative;
 }
 
 .welcome-guide {
