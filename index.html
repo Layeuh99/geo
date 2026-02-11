@@ -53,8 +53,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle"><i class="fas fa-search"></i> Analyser <i class="fas fa-chevron-down"></i></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#" onclick="showSpatialQuery()"><i class="fas fa-draw-polygon"></i> Requête spatiale</a></li>
-                        <li><a href="#" onclick="showAttributeQuery()"><i class="fas fa-filter"></i> Requête attributaire</a></li>
+                        <li><a href="#" onclick="showSpatialQuery()"><i class="fas fa-draw-polygon"></i> Analyser autour d'un point</a></li>
+                        <li><a href="#" onclick="showAttributeQuery()"><i class="fas fa-filter"></i> Rechercher des informations</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -99,22 +99,22 @@
                             <div class="guide-step">
                                 <div class="step-number">1</div>
                                 <div class="step-content">
-                                    <strong>Explorer</strong>
-                                    <p>Cliquez sur "Couches" à gauche pour afficher/masquer les différentes informations (écoles, localités, routes...)</p>
+                                    <strong>🗺️ Explorer les données</strong>
+                                    <p>Cliquez sur "Couches" dans le menu de gauche pour afficher ou masquer les informations (écoles, routes, localités...). Utilisez "Carte & Légende" pour changer le fond de carte.</p>
                                 </div>
                             </div>
                             <div class="guide-step">
                                 <div class="step-number">2</div>
                                 <div class="step-content">
-                                    <strong>Analyser</strong>
-                                    <p>Utilisez "Analyser" dans le menu pour trouver des écoles près d'un point ou rechercher des localités par nom</p>
+                                    <strong>🔍 Rechercher des informations</strong>
+                                    <p>Utilisez le menu "Analyser" pour trouver des écoles près d'un endroit précis ou chercher des localités par leur nom.</p>
                                 </div>
                             </div>
                             <div class="guide-step">
                                 <div class="step-number">3</div>
                                 <div class="step-content">
-                                    <strong>Exporter</strong>
-                                    <p>Téléchargez les données qui vous intéressent en différents formats (PDF, GeoJSON, Excel)</p>
+                                    <strong>📊 Analyser et exporter</strong>
+                                    <p>Mesurez des distances, analysez des zones et téléchargez les données qui vous intéressent en PDF, Excel ou formats SIG.</p>
                                 </div>
                             </div>
                         </div>
@@ -291,7 +291,7 @@
                             </div>
                             <div class="legend-item">
                                 <div class="legend-symbol" style="background: rgba(87,201,45,1.0); border: 2px solid rgba(35,35,35,1.0);"></div>
-                                <span>SAGNA</span>
+                                <span><strong></strong>SAGNA</strong><br><small>Arrondissement administratif</small></span>
                             </div>
                             
                             <!-- Infrastructure -->
@@ -300,15 +300,15 @@
                             </div>
                             <div class="legend-item">
                                 <div class="legend-line" style="background: rgba(255,0,0,1.0); height: 3px;"></div>
-                                <span>Routes</span>
+                                <span><strong>Routes</strong><br><small>Réseau routier principal</small></span>
                             </div>
                             <div class="legend-item">
                                 <div class="legend-point" style="background: rgba(83,83,83,1.0); border: 2px solid rgba(247,247,247,1.0); width: 8px; height: 8px; border-radius: 50%;"></div>
-                                <span>Localités</span>
+                                <span><strong>Localités</strong><br><small>Villages et villes</small></span>
                             </div>
                             <div class="legend-item">
                                 <div class="legend-point" style="background: rgba(184,8,8,1.0); width: 10px; height: 10px; border-radius: 50%;"></div>
-                                <span>Écoles</span>
+                                <span><strong>Écoles</strong><br><small>Établissements scolaires</small></span>
                             </div>
                         </div>
                     </div>
@@ -321,24 +321,20 @@
                                 <span>ANSD Sénégal - RGPH 2023</span>
                             </div>
                             <div class="metadata-item">
-                                <strong><i class="fas fa-calendar"></i> Date:</strong>
-                                <span>2024-06-15</span>
+                                <strong><i class="fas fa-calendar"></i> Date de production:</strong>
+                                <span>15 juin 2024</span>
                             </div>
                             <div class="metadata-item">
-                                <strong><i class="fas fa-globe"></i> Projection:</strong>
+                                <strong><i class="fas fa-globe"></i> Système de coordonnées:</strong>
                                 <span>WGS84 (EPSG:4326)</span>
                             </div>
                             <div class="metadata-item">
                                 <strong><i class="fas fa-crosshairs"></i> Précision:</strong>
-                                <span>±10m (GPS)</span>
+                                <span>±10 mètres (GPS)</span>
                             </div>
                             <div class="metadata-item">
-                                <strong><i class="fas fa-exclamation-triangle"></i> Limites:</strong>
-                                <span>Données administratives uniquement</span>
-                            </div>
-                            <div class="metadata-item">
-                                <strong><i class="fas fa-envelope"></i> Contact:</strong>
-                                <span>geo@ansd.sn</span>
+                                <strong><i class="fas fa-exclamation-triangle"></i> Limites d'utilisation:</strong>
+                                <span>Usage administratif et académique uniquement</span>
                             </div>
                         </div>
                     </div>
@@ -586,6 +582,7 @@
                     
                     <!-- Résultats -->
                     <div id="spatialAdvancedResults" style="display: none;">
+                        <h5 style="color: #667eea; margin-bottom: 10px;"><i class="fas fa-search"></i> Résultats de l'analyse</h5>
                         <div id="spatialAdvancedResultsContent" style="max-height: 300px; overflow-y: auto; margin-bottom: 10px;"></div>
                         <button onclick="clearAdvancedSpatialQuery()" class="btn-secondary" style="width: 100%; padding: 10px;">
                             <i class="fas fa-trash"></i> Nouvelle recherche
@@ -650,6 +647,7 @@
                     
                     <!-- Résultats -->
                     <div id="attrResults" style="display: none; margin-top: 15px;">
+                        <h5 style="color: #667eea; margin-bottom: 10px;"><i class="fas fa-list"></i> Informations trouvées</h5>
                         <div id="attrResultsContent" style="max-height: 300px; overflow-y: auto;"></div>
                         <button onclick="clearAttrQuery()" class="btn-secondary" style="width: 100%; margin-top: 10px; padding: 10px;">
                             <i class="fas fa-trash"></i> Nouvelle recherche
