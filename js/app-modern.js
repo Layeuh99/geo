@@ -195,6 +195,10 @@ function initLayers() {
     setTimeout(() => {
         map.invalidateSize();
         console.log('[DEBUG] Taille carte invalidée');
+        
+        // FORCER un nouveau centrage si les tuiles ne chargent pas
+        map.setView([14.9719, -15.6574], 9);
+        console.log('[DEBUG] Recentrage forcé');
     }, 1000);
 
     // Couches de donnÃ©es
