@@ -130,8 +130,13 @@ function centerMap() {
     // Forcer le recalcul de la taille
     map.invalidateSize();
     
-    // Centrer sur la rÃ©gion de Kaffrine
-    map.fitBounds([[13.721171213050045, -16.131926969286404], [14.821030838950062, -14.310367685713494]]);
+    // Centrer sur la région de Kaffrine avec zoom plus large pour voir tout
+    map.setView([14.9719, -15.6574], 9);
+    
+    // Forcer le rafraîchissement des couches
+    setTimeout(() => {
+        map.invalidateSize();
+    }, 500);
 }
 
 // ============================================
