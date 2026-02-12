@@ -33,6 +33,48 @@ var endIcon = L.divIcon({
 // ============================================
 
 /**
+ * Affiche une notification à l'utilisateur
+ */
+function afficherNotification(message, type = 'info') {
+    try {
+        // Utiliser la fonction globale si disponible, sinon créer une alerte simple
+        if (typeof window.afficherNotification === 'function') {
+            window.afficherNotification(message, type);
+        } else {
+            // Solution de secours : créer une notification temporaire
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                z-index: 10000;
+                padding: 15px 20px;
+                background: ${type === 'error' ? '#dc3545' : type === 'success' ? '#28a745' : type === 'warning' ? '#ffc107' : '#667eea'};
+                color: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                font-size: 0.9rem;
+                max-width: 300px;
+                animation: slideInRight 0.3s ease;
+            `;
+            notification.innerHTML = message;
+            document.body.appendChild(notification);
+            
+            // Auto-suppression après 5 secondes
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 5000);
+        }
+    } catch (error) {
+        console.error('Erreur dans afficherNotification:', error);
+        // En dernier recours : console.log
+        console.log(`[${type.toUpperCase()}] ${message}`);
+    }
+}
+
+/**
  * Active/désactive le mode de calcul d'itinéraire
  */
 function toggleRouting() {
