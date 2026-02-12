@@ -13,7 +13,7 @@ let locateControl;
 let layerControl;
 let currentBasemap = 'OSMStandard';
 let highlightLayer;
-let autolinker;
+// let autolinker; // Désactivé sur GitHub Pages
 let bounds_group;
 
 // ðŸš€ Performance monitoring
@@ -112,8 +112,8 @@ function initMap() {
     // Hash pour les permaliens (désactivé sur GitHub Pages)
     // new L.Hash(map);
 
-    // Configurer l'autolinker pour les popups
-    autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+    // Configurer l'autolinker pour les popups (désactivé sur GitHub Pages)
+    // autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
 
     // Groupe de limites
     bounds_group = new L.featureGroup([]);
