@@ -329,6 +329,7 @@ body.dark-theme .type-btn:hover {
     display: flex;
     height: calc(100vh - 60px);
     margin-top: 60px;
+    min-height: 700px !important;
 }
 
 /* ============================================

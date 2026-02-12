@@ -98,6 +98,16 @@ document.addEventListener('DOMContentLoaded', function() {
 // INITIALISATION DE LA CARTE
 // ============================================
 function initMap() {
+    console.log('[DEBUG] initMap() appelé');
+    
+    // Vérifier que l'élément map existe
+    const mapElement = document.getElementById('map');
+    if (!mapElement) {
+        console.error('[DEBUG] Élément #map non trouvé!');
+        return;
+    }
+    console.log('[DEBUG] Élément #map trouvé:', mapElement);
+    
     // CrÃ©er la carte
     map = L.map('map', {
         zoomControl: false,
@@ -105,6 +115,12 @@ function initMap() {
         minZoom: 1,
         attributionControl: true
     });
+    
+    console.log('[DEBUG] Carte Leaflet créée:', map);
+
+    // FORCER le centrage immédiat
+    map.setView([14.9719, -15.6574], 9);
+    console.log('[DEBUG] Carte centrée sur Kaffrine');
 
     // Hash pour les permaliens (désactivé sur GitHub Pages)
     // new L.Hash(map);
@@ -135,6 +151,8 @@ function centerMap() {
 // INITIALISATION DES COUCHES
 // ============================================
 function initLayers() {
+    console.log('[DEBUG] initLayers() appelé');
+    
     // CrÃ©er les panes pour les couches
     createPane('CartoDbDarkMatter', 400);
     createPane('GoogleHybrid', 401);
@@ -145,28 +163,9 @@ function initLayers() {
     createPane('Routes', 406);
     createPane('Localites', 407);
     createPane('Ecoles', 408);
+    console.log('[DEBUG] Panes créées');
 
     // Fonds de carte
-    layers.CartoDbDarkMatter = L.tileLayer('http://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', {
-        pane: 'pane_CartoDbDarkMatter',
-        opacity: 1.0,
-        attribution: '',
-        minZoom: 1,
-        maxZoom: 28,
-        minNativeZoom: 0,
-        maxNativeZoom: 20
-    });
-
-    layers.GoogleHybrid = L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
-        pane: 'pane_GoogleHybrid',
-        opacity: 1.0,
-        attribution: '<a href="https://www.google.at/permissions/geoguidelines/attr-guide.html">Map data Â©2015 Google</a>',
-        minZoom: 1,
-        maxZoom: 28,
-        minNativeZoom: 0,
-        maxNativeZoom: 20
-    });
-
     layers.OSMStandard = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         pane: 'pane_OSMStandard',
         opacity: 1.0,
@@ -176,9 +175,11 @@ function initLayers() {
         minNativeZoom: 0,
         maxNativeZoom: 19
     });
+    console.log('[DEBUG] Couche OSM créée:', layers.OSMStandard);
 
     // Fond de carte par dÃ©faut
     map.addLayer(layers.OSMStandard);
+    console.log('[DEBUG] Couche OSM ajoutée à la carte');
 
     // Couches de donnÃ©es
     initDataLayers();
