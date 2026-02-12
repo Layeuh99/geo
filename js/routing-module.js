@@ -14,19 +14,26 @@ var endMarker = null;
 var routingClickHandler = null;
 
 // Icônes personnalisées pour les points de départ/arrivée
-var startIcon = L.divIcon({
-    html: '<div style="background: #28a745; color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">D</div>',
-    iconSize: [30, 30],
-    iconAnchor: [15, 15],
-    className: 'routing-start-marker'
-});
+var startIcon, endIcon;
 
-var endIcon = L.divIcon({
-    html: '<div style="background: #dc3545; color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">A</div>',
-    iconSize: [30, 30],
-    iconAnchor: [15, 15],
-    className: 'routing-end-marker'
-});
+// Initialiser les icônes quand Leaflet est disponible
+function initRoutingIcons() {
+    if (typeof L !== 'undefined' && L.divIcon) {
+        startIcon = L.divIcon({
+            html: '<div style="background: #28a745; color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">D</div>',
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+            className: 'routing-start-marker'
+        });
+
+        endIcon = L.divIcon({
+            html: '<div style="background: #dc3545; color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-weight: bold; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.3);">A</div>',
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+            className: 'routing-end-marker'
+        });
+    }
+}
 
 // ============================================
 // FONCTIONS PRINCIPALES DE ROUTAGE
@@ -179,6 +186,9 @@ function handleRoutingClick(e) {
  */
 function setStartPoint(latlng) {
     try {
+        // Initialiser les icônes si nécessaire
+        initRoutingIcons();
+        
         if (startMarker) {
             map.removeLayer(startMarker);
         }
@@ -197,6 +207,9 @@ function setStartPoint(latlng) {
  */
 function setEndPoint(latlng) {
     try {
+        // Initialiser les icônes si nécessaire
+        initRoutingIcons();
+        
         if (endMarker) {
             map.removeLayer(endMarker);
         }
@@ -378,6 +391,9 @@ function addRoutingControls(isActive) {
  */
 function initRoutingModule() {
     try {
+        // Initialiser les icônes en premier
+        initRoutingIcons();
+        
         // Vérifier que la carte et les bibliothèques nécessaires sont chargées
         if (typeof map === 'undefined' || typeof L === 'undefined') {
             console.warn('Carte ou Leaflet non disponible pour le module de routage');
