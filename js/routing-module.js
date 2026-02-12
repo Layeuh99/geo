@@ -414,8 +414,8 @@ function initRoutingModule() {
 
 // Initialiser le module quand le DOM est chargé
 document.addEventListener('DOMContentLoaded', function() {
-    // Attendre que la carte soit initialisée
-    setTimeout(initRoutingModule, 1000);
+    // Attendre que la carte soit initialisée (plus long délai pour garantir)
+    setTimeout(initRoutingModule, 2000);
 });
 
 // Exporter les fonctions globalement
