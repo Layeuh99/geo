@@ -216,7 +216,8 @@ function initDataLayers() {
                     lineCap: 'butt',
                     lineJoin: 'miter',
                     weight: 5.0,
-                    fillOpacity: 0,
+                    fillOpacity: 0.3,
+                    fillColor: 'rgba(102, 126, 234, 0.3)',
                     interactive: true
                 };
             }
