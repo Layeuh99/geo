@@ -455,26 +455,49 @@ body.dark-theme .type-btn:hover {
 }
 
 #map {
+    width: 100%;
+    height: 600px;
+    position: relative;
+    z-index: 1;
+}
+
+/* FORCER la visibilité de la carte */
+.leaflet-container {
     width: 100% !important;
     height: 600px !important;
-    background: #f0f0f0 !important;
-    border: 3px solid red !important;
     position: relative !important;
     z-index: 1 !important;
-    display: block !important;
-    visibility: visible !important;
+    background: transparent !important;
+}
+
+.leaflet-pane {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: auto !important;
+}
+
+.leaflet-map-pane {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    z-index: 1 !important;
+}
+
+.leaflet-tile-pane {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: 2 !important;
     opacity: 1 !important;
 }
 
-/* FORCER les tuiles à être visibles */
-#map .leaflet-tile {
+.leaflet-tile {
     opacity: 1 !important;
     visibility: visible !important;
-}
-
-#map .leaflet-tile-pane {
-    opacity: 1 !important;
-    visibility: visible !important;
+    position: absolute !important;
 }
 
 /* ============================================
