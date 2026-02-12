@@ -280,9 +280,9 @@ function initDataLayers() {
                     opacity: 1,
                     color: 'rgba(255,0,0,1.0)',
                     dashArray: '',
-                    lineCap: 'round',
-                    lineJoin: 'round',
-                    weight: 1.0,
+                    lineCap: 'butt',
+                    lineJoin: 'miter',
+                    weight: 3.0,
                     fillOpacity: 0,
                     interactive: true
                 };
