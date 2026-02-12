@@ -22,6 +22,10 @@
         <link rel="stylesheet" href="css/leaflet-search.css">
         <link rel="stylesheet" href="css/leaflet-measure.css">
         <link rel="stylesheet" href="css/qgis2web.css">
+        <!-- Leaflet Routing Machine CSS -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.css">
+        <!-- Module de routage CSS -->
+        <link rel="stylesheet" href="css/routing-module.css">
         <link rel="stylesheet" href="css/app-modern.css?v=16">
         <link rel="stylesheet" href="css/ui-enhanced.css?v=1">
         <link rel="stylesheet" href="css/dark-theme.css">
@@ -51,10 +55,11 @@
                 <li><a href="#" onclick="toggleLeftPanel()" role="menuitem" aria-label="Panneau des couches"><i class="fas fa-layer-group" aria-hidden="true"></i> <span>Couches</span></a></li>
                 <li><a href="#" onclick="toggleRightPanel()" role="menuitem" aria-label="Fonds de carte et légende"><i class="fas fa-map" aria-hidden="true"></i> <span>Carte & Légende</span></a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle"><i class="fas fa-search"></i> Analyser <i class="fas fa-chevron-down"></i></a>
+                    <a href="#" class="dropdown-toggle"><i class="fas fa-tools"></i> Outils <i class="fas fa-chevron-down"></i></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#" onclick="showSpatialQuery()"><i class="fas fa-draw-polygon"></i> Analyser autour d'un point</a></li>
-                        <li><a href="#" onclick="showAttributeQuery()"><i class="fas fa-filter"></i> Rechercher des informations</a></li>
+                        <li><a href="#" onclick="toggleMeasure()"><i class="fas fa-ruler"></i> Mesurer</a></li>
+                        <li><a href="#" onclick="locateUser()"><i class="fas fa-crosshairs"></i> Ma position</a></li>
+                        <li><a href="#" onclick="toggleRouting()"><i class="fas fa-route"></i> Calculer un itinéraire</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -666,16 +671,22 @@
         <!-- Scripts -->
         <script src="js/leaflet.js"></script>
         <script src="js/L.Control.Layers.Tree.min.js"></script>
+        <script src="js/leaflet-providers.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="js/leaflet.photon.js"></script>
         <script src="js/L.Control.Locate.min.js"></script>
-        <script src="js/multi-style-layer.js"></script>
-        <script src="js/leaflet-svg-shape-markers.min.js"></script>
-        <script src="js/leaflet.rotatedMarker.js"></script>
-        <script src="js/leaflet.pattern.js"></script>
-        <script src="js/leaflet-hash.js"></script>
-        <script src="js/Autolinker.min.js"></script>
-        <script src="js/rbush.min.js"></script>
-        <script src="js/labelgun.min.js"></script>
-        <script src="js/labels.js"></script>
+        <script src="js/Leaflet.VectorGrid.js"></script>
+        <!-- Leaflet Routing Machine JS -->
+        <script src="https://unpkg.com/leaflet-routing-machine@3.2.12/dist/leaflet-routing-machine.js"></script>
+        <script src="js/app-modern.js?v=21"></script>
+
+        <!-- Interface utilisateur améliorée -->
+        <script src="js/ui-enhanced.js?v=1"></script>
+        
+        <!-- Module de routage -->
+        <script src="js/routing-module.js"></script>
         <script src="js/leaflet.markercluster.js"></script>
         <script src="js/leaflet-search.js"></script>
         <script src="js/leaflet-measure.js"></script>
