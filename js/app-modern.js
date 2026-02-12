@@ -175,11 +175,27 @@ function initLayers() {
         minNativeZoom: 0,
         maxNativeZoom: 19
     });
+    
+    // FORCER le chargement des tuiles
+    layers.OSMStandard.on('tileload', function(e) {
+        console.log('[DEBUG] Tuile chargée:', e.tile);
+    });
+    
+    layers.OSMStandard.on('tileerror', function(e) {
+        console.error('[DEBUG] Erreur tuile:', e);
+    });
+    
     console.log('[DEBUG] Couche OSM créée:', layers.OSMStandard);
 
     // Fond de carte par dÃ©faut
     map.addLayer(layers.OSMStandard);
     console.log('[DEBUG] Couche OSM ajoutée à la carte');
+    
+    // FORCER le rafraîchissement après 1 seconde
+    setTimeout(() => {
+        map.invalidateSize();
+        console.log('[DEBUG] Taille carte invalidée');
+    }, 1000);
 
     // Couches de donnÃ©es
     initDataLayers();
