@@ -466,6 +466,17 @@ body.dark-theme .type-btn:hover {
     opacity: 1 !important;
 }
 
+/* FORCER les tuiles à être visibles */
+#map .leaflet-tile {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+#map .leaflet-tile-pane {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
 /* ============================================
    BARRE DE STATUT - RÉDUITE
    ============================================ */
