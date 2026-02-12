@@ -456,7 +456,8 @@ body.dark-theme .type-btn:hover {
 #map {
     flex: 1;
     width: 100%;
-    min-height: 0;
+    min-height: 400px;
+    height: 100%;
 }
 
 /* ============================================
