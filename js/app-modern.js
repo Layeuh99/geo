@@ -106,9 +106,6 @@ function initMap() {
         attributionControl: true
     });
 
-    // Centrer la carte sur Kaffrine
-    map.setView([14.9719, -15.6574], 10);
-
     // Hash pour les permaliens (désactivé sur GitHub Pages)
     // new L.Hash(map);
 
@@ -130,13 +127,8 @@ function centerMap() {
     // Forcer le recalcul de la taille
     map.invalidateSize();
     
-    // Centrer sur la région de Kaffrine avec zoom plus large pour voir tout
-    map.setView([14.9719, -15.6574], 9);
-    
-    // Forcer le rafraîchissement des couches
-    setTimeout(() => {
-        map.invalidateSize();
-    }, 500);
+    // Centrer sur la région de Kaffrine
+    map.fitBounds([[13.721171213050045, -16.131926969286404], [14.821030838950062, -14.310367685713494]]);
 }
 
 // ============================================
@@ -224,8 +216,7 @@ function initDataLayers() {
                     lineCap: 'butt',
                     lineJoin: 'miter',
                     weight: 5.0,
-                    fillOpacity: 0.3,
-                    fillColor: 'rgba(102, 126, 234, 0.3)',
+                    fillOpacity: 0,
                     interactive: true
                 };
             }
@@ -287,7 +278,7 @@ function initDataLayers() {
                     dashArray: '',
                     lineCap: 'butt',
                     lineJoin: 'miter',
-                    weight: 3.0,
+                    weight: 1.0,
                     fillOpacity: 0,
                     interactive: true
                 };
