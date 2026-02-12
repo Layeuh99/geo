@@ -106,8 +106,8 @@ function initMap() {
         attributionControl: true
     });
 
-    // Hash pour les permaliens (désactivé temporairement pour debug)
-    // new L.Hash(map);
+    // Hash pour les permaliens
+    new L.Hash(map);
 
     // Configurer l'autolinker pour les popups
     autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
