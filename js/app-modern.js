@@ -106,6 +106,9 @@ function initMap() {
         attributionControl: true
     });
 
+    // Centrer la carte sur Kaffrine
+    map.setView([14.9719, -15.6574], 10);
+
     // Hash pour les permaliens
     new L.Hash(map);
 
