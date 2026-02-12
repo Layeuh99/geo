@@ -453,6 +453,8 @@ body.dark-theme .type-btn:hover {
     position: relative;
     display: flex;
     flex-direction: column;
+    min-height: 500px;
+    height: calc(100vh - 120px);
 }
 
 #map {
