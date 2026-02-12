@@ -109,8 +109,8 @@ function initMap() {
     // Centrer la carte sur Kaffrine
     map.setView([14.9719, -15.6574], 10);
 
-    // Hash pour les permaliens
-    new L.Hash(map);
+    // Hash pour les permaliens (désactivé sur GitHub Pages)
+    // new L.Hash(map);
 
     // Configurer l'autolinker pour les popups
     autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
